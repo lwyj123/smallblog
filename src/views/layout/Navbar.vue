@@ -4,7 +4,7 @@
       <!-- Logo bar -->
       <div class="logo" @click="$router.push({path: '/'})">
         <img src="">
-        Wuanlife
+        午安网
       </div>
       <!-- Search bar -->
       <div class="search-container">
@@ -12,9 +12,15 @@
           class="search"
           placeholder="Search for ..."
           icon="search"
-          v-model="input2"
-          :on-icon-click="handleIconClick">
+          v-model="searchContent"
+          @keyup.enter.native="$router.push({path: '/search', query:{search: searchContent}})">
         </el-input>
+      </div>
+      <div class="notif-container"
+           @click="$router.push({path: '/inform/'})">
+        <el-badge :is-dot="true">
+          <icon-svg icon-class="smallbell" class="notif-icon"></icon-svg>
+        </el-badge>
       </div>
       <!-- avatar bar -->
       <el-dropdown menu-align="start" 
@@ -24,33 +30,33 @@
                    @visible-change="visibleChange">
         <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
           <icon-svg icon-class="peopleCircle" class="avatar-icon"></icon-svg>
-          <span>keke</span>
+          <span>{{ user.userInfo.name }}</span>
         </div>
         <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <router-link class='inlineBlock' to="/">
+          <router-link class='inlineBlock' to="/personalData/">
             <el-dropdown-item>
               <icon-svg icon-class="people_2" class="avatar-icon"></icon-svg>
               个人资料
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <router-link class='inlineBlock' to="/collection/">
             <el-dropdown-item>
               <icon-svg icon-class="starSolid" class="avatar-icon"></icon-svg>
               我的收藏
             </el-dropdown-item>
-          </a>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          </router-link>
+          <router-link class='inlineBlock' to="/invitecode/">
             <el-dropdown-item>
               <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
               邀请好友
             </el-dropdown-item>
-          </a>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          </router-link>
+          <router-link class='inlineBlock' to="/resetpsw/">
             <el-dropdown-item>
               <icon-svg icon-class="lock_2" class="avatar-icon"></icon-svg>
               修改密码
             </el-dropdown-item>
-          </a>
+          </router-link>
           <a @click="logout">
             <el-dropdown-item>
               <icon-svg icon-class="poweroff" class="avatar-icon"></icon-svg>
@@ -61,8 +67,8 @@
       </el-dropdown>
       <!-- login bar (if not logined) -->
       <div v-else class="login-container">
-        <span><router-link to="/login/">Login</router-link></span>
-        <span><router-link to="/signup/">Signup</router-link></span>
+        <span><router-link to="/login/">登录</router-link></span>
+        <span><router-link to="/signup/">注册</router-link></span>
       </div>
     </div>
   </el-menu>
@@ -71,14 +77,19 @@
 <script>
   import { mapGetters } from 'vuex';
   import Levelbar from './Levelbar';
+  import TabsView from './TabsView';
+  import errLogStore from 'vuex-store/errLog';
 
   export default {
     components: {
       Levelbar,
+      TabsView,
     },
     data() {
       return {
+        log: errLogStore.state.errLog,
         isShowDrop: false,
+        searchContent: '',
       }
     },
     computed: {
@@ -94,6 +105,14 @@
       },
       visibleChange() {
         this.isShowDrop = !this.isShowDrop;
+      },
+      handleIconClick() {
+        if (this.input2 !== '') {
+          this.$store.commit('SET_SEARCHTEXT',this.searchContent);
+          this.$router.push({ path: '/search' });
+        } else{
+          alert("请输入要搜索的内容");
+        }
       }
     }
   }
@@ -125,8 +144,24 @@
           flex: 0.7;
         }
       }
-      .login-container, .avatar-container {
+      .notif-container {
         margin-left: auto;
+        margin-right: 22px;
+        
+        .notif-icon {
+          display: block;
+          background: transparent;
+          cursor: pointer;
+          color: #ffffff;
+          width: 18px;
+          height: 18px;
+          &:hover {
+            color: #dddddd;
+          }
+        }
+      }
+      .login-container, .avatar-container {
+        
         margin-right: 30px;
       }
       .login-container {

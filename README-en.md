@@ -39,7 +39,6 @@ Join the group on QQ 591724180.
 - Dropzone
 - Sticky
 - CountTo
-- ECharts
 - 401, 404 error page
 - Error log
 - Exporting to Excel
@@ -105,6 +104,8 @@ npm run build:prod
 │   ├── App.vue                // entry view
 │   └── main.js                // entry for loading components, initialization
 ├── static                     // third-party libraries not packed with Webpack
+│   ├── jquery
+│   └── Tinymce                // rich text
 ├── .babelrc                   // babel-loader config
 ├── eslintrc.js                // eslint config
 ├── .gitignore                 // gitignore
