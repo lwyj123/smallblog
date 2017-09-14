@@ -1,8 +1,8 @@
 {
-  "name": "wuanlife_vuepc",
+  "name": "smallblog",
   "version": "0.0.1",
   "description": "A Vue.js admin",
-  "author": "",
+  "author": "lwio",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "amfe-flexible": "^2.2.1",
     "axios": "0.16.2",
     "codemirror": "5.26.0",
     "element-ui": "1.3.6",

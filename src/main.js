@@ -50,18 +50,6 @@ router.afterEach(() => {
 
 Vue.config.productionTip = false;
 
-// 生产环境错误日志
-if (process.env === 'production') {
-  Vue.config.errorHandler = function(err, vm) {
-    console.log(err, window.location.href);
-    errLog.pushLog({
-      err,
-      url: window.location.href,
-      vm
-    })
-  };
-}
-
 new Vue({
   el: '#app',
   router,
