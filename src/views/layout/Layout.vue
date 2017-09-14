@@ -27,15 +27,17 @@
   @import "src/styles/mixin.scss";
   .app-wrapper {
     @include clearfix;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    height: 100%;
+    min-height: 100vh;
     width: 100%;
     .navbar-wrapper {
-      height: 50px;
+      
     }
     .main-container {
       background-color: #f8f9fa;
-      height: calc(100vh - 50px);
+      flex: 1;
       overflow: auto;
       transition: all .28s ease-out;
     }
